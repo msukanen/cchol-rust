@@ -5,6 +5,10 @@ use num::{ Float, NumCast };
  Dice extensions.
  */
 pub trait DiceExt {
+    /// A `sides`-die.
+    fn d(&self, sides:u8) -> Self;
+    /// A `sides`-die w/ modifier.
+    fn d_(&self, sides:u8, modifier:Self) -> Self;
     /// A d6.
     fn d6(&self) -> Self;
     /// A d6 w/ modifier.
@@ -29,9 +33,11 @@ fn any_i32(num: i32, sides:u8) -> i32 {
 }
 
 impl DiceExt for i32 {
-    fn d6(&self) -> Self { any_i32(*self, 6)}
+    fn d(&self, sides:u8) -> Self { any_i32(*self, sides)}
+    fn d_(&self, sides:u8, modifier:Self) -> Self { self.d(sides) + modifier}
+    fn d6(&self) -> Self { self.d(6)}
     fn d6_(&self, modifier:Self) -> Self {self.d6() + modifier}
-    fn d100(&self) -> Self { any_i32(*self, 100)}
+    fn d100(&self) -> Self { self.d(100)}
     fn d100_(&self, modifier:Self) -> Self {self.d100() + modifier}
     fn chance(&self, of:i32) -> Option<i32> {
         if 3.d6() as Self <= *self {Some(of)} else {None}

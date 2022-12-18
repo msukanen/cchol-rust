@@ -1,6 +1,6 @@
-use cchol::dice::{DiceExt};
+use cchol::race::RaceFactory;
 
 fn main() {
-    let d = 1.d6();
-    println!("Hello, {}th world!", d);
+    let r = RaceFactory::new();
+    println!("Hello, {} world!", r.name());
 }
