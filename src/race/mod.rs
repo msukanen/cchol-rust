@@ -8,7 +8,21 @@ pub mod hybrid;
 use crate::dice::DiceExt;
 use crate::event::racial_event::RacialEventType;
 
-use self::{elf::Elf, human::Human, dwarf::Dwarf, halfling::Halfling, hybrid::{halfelf::HalfElf}};
+use self::{
+    elf::Elf,
+    human::Human,
+    dwarf::Dwarf,
+    halfling::Halfling,
+    hybrid::{
+        halfelf::HalfElf,
+        halforc::HalfOrc
+    },
+    monster::{
+        beastman::BeastmanFactory,
+        reptileman::ReptilemanFactory,
+        orc::Orc
+    }
+};
 
 /// Traits for all current and future races.
 pub trait Race {
@@ -20,35 +34,39 @@ pub trait Race {
     fn event_type(&self) -> RacialEventType;
 }
 
-pub trait HybridRace {
-    /// Raised by `Human`s?
-    fn raised_by_humans(&self) -> bool;
+pub trait RaceF {
+    fn new() -> Box<dyn Race>;
 }
 
 pub struct RaceFactory;
 
-impl RaceFactory {
+impl RaceF for RaceFactory {
     /// Generate a random `Race`.
-    pub fn new() -> Box<dyn Race> {
+    fn new() -> Box<dyn Race> {
         let r = 1.d(20);
         match r {
             x if x < 14 => Self::new_human(),
             _ => Self::new_nonhuman()
         }
     }
+}
 
+impl RaceFactory {
     /// Generate a `Human` `Race`.
-    pub fn new_human() -> Box<dyn Race> { Box::new(Human::new()) }
+    pub fn new_human() -> Box<dyn Race> { Human::new() }
 
     /// Generate a random nonhuman `Race`.
     pub fn new_nonhuman() -> Box<dyn Race> {
         let r = 1.d(20);
         match r {
-            x if x <= 4 => Box::new(Elf::new()),
-            x if x <= 8 => Box::new(Dwarf::new()),
-            x if x <= 11 => Box::new(Halfling::new()),
-            x if x <= 15 => Box::new(HalfElf::new(1.d(2)==1)),
-            _ => Self::new_human()
+            x if x <= 4 => Elf::new(),
+            x if x <= 8 => Dwarf::new(),
+            x if x <= 11 => Halfling::new(),
+            x if x <= 15 => HalfElf::new(1.d(2)==1),
+            16 => BeastmanFactory::new(),
+            17 => ReptilemanFactory::new(),
+            18 => Orc::new(),
+            _ => HalfOrc::new(1.d(2)==1)
         }
     }
 }

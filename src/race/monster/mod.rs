@@ -1,8 +1,5 @@
 pub mod beastman;
 pub mod reptileman;
+pub mod orc;
 
-use crate::event::racial_event::RacialEventType;
-
-trait MonsterRace {
-    fn event_type(&self) -> RacialEventType { RacialEventType::MONSTER }
-}
+pub trait MonsterRace {}

@@ -1,6 +1,6 @@
-use cchol::race::RaceFactory;
+use cchol::race::{RaceFactory, RaceF};
 
 fn main() {
-    let r = RaceFactory::new();
+    let r = <RaceFactory as RaceF>::new();
     println!("Hello, {} world!", r.name());
 }

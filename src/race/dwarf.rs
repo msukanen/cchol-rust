@@ -10,7 +10,5 @@ impl Race for Dwarf {
 }
 
 impl Dwarf {
-    pub fn new() -> Self {
-        Dwarf { }
-    }
+    pub fn new() -> Box<dyn Race> {Box::new(Dwarf{})}
 }

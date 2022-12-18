@@ -1,5 +1,7 @@
-use crate::race::{Race, HybridRace};
+use crate::race::Race;
 use crate::event::racial_event::RacialEventType;
+
+use super::HybridRace;
 
 pub struct HalfOrc {
     raised_by_human: bool
@@ -10,14 +12,12 @@ impl Race for HalfOrc {
         if self.raised_by_human { RacialEventType::HUMAN   }
         else                    { RacialEventType::MONSTER }
      }
-    fn name(&self) -> &'static str { "human" }
-    fn description(&self) -> &'static str { "human" }
+    fn name(&self) -> &'static str { "half-orc" }
+    fn description(&self) -> &'static str { self.name() }
 }
 
 impl HalfOrc {
-    pub fn new(raised_by_human: bool) -> Self {
-        HalfOrc { raised_by_human }
-    }
+    pub fn new(raised_by_human: bool) -> Box<dyn Race> {Box::new(HalfOrc { raised_by_human })}
 }
 
 impl HybridRace for HalfOrc {
