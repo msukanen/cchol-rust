@@ -22,7 +22,7 @@ impl CultureFactory {
         }
     }
 
-    pub fn new(race:impl Race) -> Box<dyn Culture> {
+    pub fn new(race:&dyn Race) -> Box<dyn Culture> {
         let mut c: Box<dyn Culture>;
         loop {
             c = CultureFactory::new_any();

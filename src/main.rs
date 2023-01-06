@@ -1,6 +1,7 @@
-use cchol::race::{RaceFactory, RaceF};
+use cchol::{race::{RaceFactory, RaceF}, society::culture::culture::CultureFactory};
 
 fn main() {
     let r = <RaceFactory as RaceF>::new();
-    println!("Hello, {}!", r.name());
+    let c = CultureFactory::new(r.as_ref());
+    println!("Hello, {} of {}!", r.name(), c.level());
 }
