@@ -12,7 +12,7 @@ impl Race for HalfElf {
         if self.raised_by_human { RacialEventType::HUMAN }
         else                    { RacialEventType::ELF   }
      }
-    fn name(&self) -> &'static str { "half-elf" }
+    fn name(&self) -> &'static str {"half-elf"}
     fn description(&self) -> &'static str { self.name() }
 }
 

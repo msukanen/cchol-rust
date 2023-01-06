@@ -5,7 +5,7 @@ pub mod halfling;
 pub mod monster;
 pub mod hybrid;
 
-use crate::dice::DiceExt;
+use crate::{dice::DiceExt, society::culture::CultureType};
 use crate::event::racial_event::RacialEventType;
 
 use self::{
@@ -32,6 +32,8 @@ pub trait Race {
     fn description(&self) -> &'static str;
     /// Racial event type.
     fn event_type(&self) -> RacialEventType;
+    /// Maximum culture type.
+    fn max_culture(&self) -> CultureType { CultureType::ANY }
 }
 
 pub trait RaceF {

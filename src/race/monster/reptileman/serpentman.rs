@@ -8,14 +8,14 @@ use crate::{
             reptileman::ReptilemanRace,
             MonsterRace
         }
-    }
+    },
 };
 
 impl ReptilemanRace for Serpentman {}
 impl Race for Serpentman {
     fn name(&self) -> &'static str {"serpentman"}
-    fn description(&self) -> &'static str {self.name()}
-    fn event_type(&self) -> crate::event::racial_event::RacialEventType {RacialEventType::MONSTER}
+    fn description(&self) -> &'static str { self.name() }
+    fn event_type(&self) -> RacialEventType { RacialEventType::MONSTER }
 }
 
 impl MonsterRace for Serpentman {

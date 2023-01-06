@@ -1,5 +1,4 @@
-use crate::race::Race;
-use crate::event::racial_event::RacialEventType;
+use crate::{race::Race, event::racial_event::RacialEventType, society::culture::CultureType};
 
 use super::HybridRace;
 
@@ -14,6 +13,10 @@ impl Race for HalfOrc {
      }
     fn name(&self) -> &'static str { "half-orc" }
     fn description(&self) -> &'static str { self.name() }
+    fn max_culture(&self) -> CultureType {
+        if self.raised_by_human { CultureType::ANY }
+        else                    { CultureType::BARBARIAN }
+    }
 }
 
 impl HalfOrc {
