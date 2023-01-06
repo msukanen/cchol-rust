@@ -3,5 +3,5 @@ use cchol::{race::{RaceFactory, RaceF}, society::culture::culture::CultureFactor
 fn main() {
     let r = <RaceFactory as RaceF>::new();
     let c = CultureFactory::new(r.as_ref());
-    println!("Hello, {} of {}!", r.name(), c.level());
+    println!("Hello, {} {}!", c.level(), r.name());
 }
