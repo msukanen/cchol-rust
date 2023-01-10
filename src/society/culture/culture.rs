@@ -1,4 +1,4 @@
-use crate::{skill::environment::EnvironmentType, race::Race, dice::DiceExt};
+use crate::{skill::{environment::EnvironmentType, BasicSkill, Skill, Hobby}, race::Race, dice::DiceExt};
 
 use super::CultureType;
 
@@ -7,6 +7,7 @@ pub trait Culture {
     fn cumod(&self) -> i32;
     fn native_env(&self) -> EnvironmentType;
     fn survival_rank(&self, env:EnvironmentType) -> i32;
+    fn basic_skills(&self) -> &[Box<dyn Skill>];
 }
 
 pub struct CultureFactory;
@@ -31,7 +32,9 @@ impl CultureFactory {
     }
 }
 
-struct Primitive;
+struct Primitive {
+    v_basic_skills: Vec<Box<dyn Skill>>,
+}
 impl Culture for Primitive {
     fn level(&self) -> CultureType { CultureType::PRIMITIVE }
     fn cumod(&self) -> i32 { -3 }
@@ -42,12 +45,26 @@ impl Culture for Primitive {
             _ => 1
         }
     }
+    fn basic_skills(&self) -> &[Box<dyn Skill>] { self.v_basic_skills.as_slice() }
 }
 impl Primitive {
-    pub fn new() -> Box<dyn Culture> {Box::new(Primitive{})}
+    pub fn new() -> Box<dyn Culture> {Box::new(Primitive{
+        v_basic_skills: {
+            let mut v = Vec::new();
+            v.push(BasicSkill::new("survival".to_string(), 4));
+            v.push(BasicSkill::new(match 1.d(3) {
+                1 => "club",
+                2 => "spear",
+                _ => "bow"
+            }.to_string(), 3));
+            v
+        }
+    })}
 }
 
-struct Nomad;
+struct Nomad {
+    v_basic_skills: Vec<Box<dyn Skill>>,
+}
 impl Culture for Nomad {
     fn level(&self) -> CultureType { CultureType::NOMAD }
     fn cumod(&self) -> i32 { 0 }
@@ -58,13 +75,22 @@ impl Culture for Nomad {
             _ => 1
         }
     }
+    fn basic_skills(&self) -> &[Box<dyn Skill>] { self.v_basic_skills.as_slice() }
 }
 impl Nomad {
-    pub fn new() -> Box<dyn Culture> {Box::new(Nomad{})}
+    pub fn new() -> Box<dyn Culture> {Box::new(Nomad{
+        v_basic_skills: {
+            let mut v = Vec::new();
+            v.push(BasicSkill::new("riding".to_string(), 4));
+            v.push(BasicSkill::new("nomad weapon".to_string(), 3));
+            v
+        }
+    })}
 }
 
 struct Barbarian {
-    nat_env: EnvironmentType
+    nat_env: EnvironmentType,
+    v_basic_skills: Vec<Box<dyn Skill>>,
 }
 impl Culture for Barbarian {
     fn level(&self) -> CultureType { CultureType::BARBARIAN }
@@ -76,21 +102,29 @@ impl Culture for Barbarian {
             _ => 1
         }
     }
+    fn basic_skills(&self) -> &[Box<dyn Skill>] { self.v_basic_skills.as_slice() }
 }
 impl Barbarian {
     pub fn new() -> Box<dyn Culture> {
         Box::new(Barbarian{
-            nat_env: if 1.d(10)<6 {EnvironmentType::WILDERNESS} else {EnvironmentType::URBAN}
+            nat_env: if 1.d(10)<6 {EnvironmentType::WILDERNESS} else {EnvironmentType::URBAN},
+            v_basic_skills: {
+                let mut v = Vec::new();
+                v.push(BasicSkill::new("hand weapon".to_string(), 3));
+                v.push(BasicSkill::new("missile weapon".to_string(), 3));
+                v
+            }
         })
     }
 }
 
 struct Civilized {
-    nat_env: EnvironmentType
+    nat_env: EnvironmentType,
+    v_basic_skills: Vec<Box<dyn Skill>>,
 }
 impl Culture for Civilized {
     fn level(&self) -> CultureType { CultureType::CIVILIZED }
-    fn cumod(&self) -> i32 { 2 }
+    fn cumod(&self) -> i32 { 4 }
     fn native_env(&self) -> EnvironmentType { self.nat_env }
     fn survival_rank(&self, env:EnvironmentType) -> i32 {
         match env {
@@ -98,19 +132,27 @@ impl Culture for Civilized {
             _ => 0
         }
     }
+    fn basic_skills(&self) -> &[Box<dyn Skill>] { self.v_basic_skills.as_slice() }
 }
 impl Civilized {
     pub fn new() -> Box<dyn Culture> {
         Box::new(Civilized{
-            nat_env: if 1.d(10)<4 {EnvironmentType::WILDERNESS} else {EnvironmentType::URBAN}
+            nat_env: if 1.d(10)<4 {EnvironmentType::WILDERNESS} else {EnvironmentType::URBAN},
+            v_basic_skills: {
+                let mut v = Vec::new();
+                v.push(Hobby::new(false, &CultureType::CIVILIZED, 2));
+                v
+            }
         })
     }
 }
 
-struct Decadent;
+struct Decadent {
+    v_basic_skills: Vec<Box<dyn Skill>>,
+}
 impl Culture for Decadent {
     fn level(&self) -> CultureType { CultureType::DECADENT }
-    fn cumod(&self) -> i32 { 2 }
+    fn cumod(&self) -> i32 { 7 }
     fn native_env(&self) -> EnvironmentType { EnvironmentType::URBAN }
     fn survival_rank(&self, env:EnvironmentType) -> i32 {
         match env {
@@ -118,7 +160,13 @@ impl Culture for Decadent {
             _ => 1
         }
     }
+    fn basic_skills(&self) -> &[Box<dyn Skill>] { self.v_basic_skills.as_slice() }
 }
 impl Decadent {
-    pub fn new() -> Box<dyn Culture> {Box::new(Decadent{})}
+    pub fn new() -> Box<dyn Culture> {Box::new(Decadent{
+        v_basic_skills: {
+            let mut v = Vec::new();
+            v
+        }
+    })}
 }

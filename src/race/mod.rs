@@ -4,10 +4,12 @@ pub mod dwarf;
 pub mod halfling;
 pub mod monster;
 pub mod hybrid;
+pub mod age;
 
 use crate::{dice::DiceExt, society::culture::CultureType};
 use crate::event::racial_event::RacialEventType;
 
+use self::age::AgeRange;
 use self::{
     elf::Elf,
     human::Human,
@@ -34,6 +36,16 @@ pub trait Race {
     fn event_type(&self) -> RacialEventType;
     /// Maximum culture type.
     fn max_culture(&self) -> CultureType { CultureType::ANY }
+    fn age_range(&self, years:i32) -> AgeRange {
+        match years {
+            x if x < 13 => AgeRange::CHILD,
+            x if x < 18 => AgeRange::ADOLESCENT,
+            x if x < 40 => AgeRange::ADULT,
+            x if x < 61 => AgeRange::MATURE,
+            x if x < 81 => AgeRange::ELDERLY,
+            _ => AgeRange::ANCIENT
+        }
+    }
 }
 
 pub trait RaceF {
