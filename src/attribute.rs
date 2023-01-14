@@ -6,10 +6,19 @@ pub trait Attribute {
 }
 
 pub struct Strength { rank:i32 }
+impl Strength {
+    pub fn new(rank:i32) -> Self { Strength{ rank } }
+}
 pub struct Intelligence { rank:i32 }
 pub struct Dexterity { rank:i32 }
+impl Dexterity {
+    pub fn new(rank:i32) -> Self { Dexterity { rank } }
+}
 pub struct MagicAbility { rank:i32 }
 pub struct Constitution { rank:i32 }
+impl Constitution {
+    pub fn new(rank:i32) -> Self { Constitution { rank } }
+}
 pub struct Charisma { rank:i32 }
 pub struct Appearance { rank:i32 }
 pub struct Age { rank:i32 }

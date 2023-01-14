@@ -52,8 +52,8 @@ pub trait RaceF {
     fn new() -> Box<dyn Race>;
 }
 
+/// Race factory.
 pub struct RaceFactory;
-
 impl RaceF for RaceFactory {
     /// Generate a random `Race`.
     fn new() -> Box<dyn Race> {
