@@ -89,7 +89,7 @@ impl Hobby {
     /// * `culture_type` - [culture][CultureType] that might affect the hobby.
     /// * `society` - [society][Society] that might affect the hobby.
     pub fn new(child:bool, culture_type:CultureType, society:i32) -> Box<dyn Skill> {
-        let mut rank = 1.d(4);
+        let mut rank = 1.d(4) as i32;
         if child { rank -= 2 }
         rank += match culture_type {
             CultureType::PRIMITIVE => -2,
