@@ -12,7 +12,7 @@ pub trait Culture {
     fn native_env(&self) -> EnvironmentType;
     /// Returns survival skill rank bonus.
     /// 
-    /// ### Arguments
+    /// #### Arguments
     /// * `env` - Requested [environment][EnvironmentType].
     /// 
     fn survival_rank(&self, env:EnvironmentType) -> i32;
@@ -38,7 +38,7 @@ impl CultureFactory {
 
     /// Generate a random [culture][Culture].
     /// 
-    /// ### Arguments
+    /// #### Arguments
     /// * `race` - [Race] which may (or may not) impose restrictions on the resulting [culture][Culture].
     /// 
     pub fn new(race:&dyn Race) -> Box<dyn Culture> {
