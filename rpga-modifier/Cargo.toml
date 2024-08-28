@@ -1,9 +1,8 @@
 [package]
-name = "cchol"
+name = "rpga-modifier"
 version = "0.1.0"
 edition = "2021"
 authors = ["Markku Sukanen"]
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-rpga-core = { path = "../rpga-core" }

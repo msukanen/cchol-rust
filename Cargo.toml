@@ -1,5 +1,5 @@
 [workspace]
-members = ["cchol", "rpga-core", "rpga-rank"]
+members = ["cchol", "rpga-core", "rpga-modifier", "rpga-rank"]
 resolver = "2"
 authors = ["Markku Sukanen"]
 license = "MIT OR Apache-2.0"

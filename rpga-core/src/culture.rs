@@ -1,4 +1,6 @@
-use crate::{base_culture::BaseCulture, traits::Modifiered, skill::environment::Environment};
+use rpga_modifier::Modifiered;
+
+use crate::{base_culture::BaseCulture, skill::environment::Environment};
 
 /**
  Core culture info.

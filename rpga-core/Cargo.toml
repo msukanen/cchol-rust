@@ -9,3 +9,4 @@ license = "MIT OR Apache-2.0"
 rand = "0.8"
 dicebag = "0.1"
 rpga-rank = { path="../rpga-rank" }
+rpga-modifier = { path="../rpga-modifier" }
