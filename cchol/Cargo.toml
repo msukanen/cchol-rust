@@ -1,0 +1,7 @@
+[package]
+name = "cchol"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rpga-core = { path = "../rpga-core" }
