@@ -26,20 +26,6 @@ impl BaseCulture {
             _    => Self::Civilized(true),
         }
     }
-
-    /**
-     Generate (pseudo)random native environment based on culture.
-     Some cultures have only fixed native environment while others are more dynamic.
-     */
-    pub fn random_native_of(&self) -> Environment {
-        match self {
-            Self::Primitive        => Environment::Wilderness,
-            Self::Nomad            => Environment::Wilderness,
-            Self::Barbarian        => if 1.d3() == 1 {Environment::Urban} else {Environment::Wilderness},
-            Self::Civilized(false) => if 1.d3() == 1 {Environment::Wilderness} else {Environment::Urban},
-            _                      => Environment::Urban
-        }
-    }
 }
 
 #[cfg(test)]
