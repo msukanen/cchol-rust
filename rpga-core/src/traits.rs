@@ -9,16 +9,6 @@ pub trait Modifiered {
 }
 
 /**
- A trait for anything with "rank".
- */
-pub trait Ranked {
-    /**
-     Get the associated rank value.
-     */
-    fn rank(&self) -> i32;
-}
-
-/**
  A trait for anything with a "name".
  */
 pub trait Named {

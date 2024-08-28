@@ -1,7 +1,5 @@
 use dicebag::DiceExt;
 
-use crate::skill::environment::Environment;
-
 /**
  Various culture levels.
  */
