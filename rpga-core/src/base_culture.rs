@@ -1,5 +1,7 @@
 use dicebag::DiceExt;
 
+use crate::culture::Culture;
+
 /**
  Various culture levels.
  */
@@ -23,6 +25,12 @@ impl BaseCulture {
             ..=9 => Self::Civilized(false),
             _    => Self::Civilized(true),
         }
+    }
+}
+
+impl PartialEq<Culture> for BaseCulture {
+    fn eq(&self, other: &Culture) -> bool {
+        self.eq(other.base())
     }
 }
 

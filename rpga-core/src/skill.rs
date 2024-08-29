@@ -1,13 +1,27 @@
+use std::{collections::HashMap, sync::{LazyLock, Mutex}};
+
 use rpga_rank::{rank::Rank, Ranked};
 
 use crate::traits::{Described, Named};
 
 pub mod environment;
+pub mod survival;
 
+#[derive(Debug, Clone)]
+pub enum SkillType {
+    Magic,
+    Outdoors,
+    Profession,
+    Stealth,
+    Unspecified,
+}
+
+#[derive(Debug, Clone)]
 pub struct Skill {
     name: String,
     rank: Rank,
     description: String,
+    r#type: SkillType,
 }
 
 impl Ranked for Skill {
@@ -32,22 +46,31 @@ impl Skill {
     /**
      Create a blank skill with no name, description nor rank.
      */
-    pub fn new() -> Self {
-        Self { name: String::from(""), rank: Rank::ZERO, description: String::from("") }
+    pub fn new(name: &str) -> Self {
+        Self { name: name.to_string(), rank: Rank::ZERO, description: String::from(""), r#type: SkillType::Unspecified }
     }
 
-    pub fn set_name(&mut self, name: &str) -> &mut Self {
-        self.name = name.to_string();
+    /**
+     Set rank.
+     */
+    pub fn set_rank(&mut self, rank: Rank) -> &mut Self {
+        self.rank = rank;
         self
     }
 
-    pub fn set_rank(&mut self, rank: i32) -> &mut Self {
-        self.rank = Rank::from(rank);
-        self
-    }
-
+    /**
+     Set description.
+     */
     pub fn set_description(&mut self, description: &str) -> &mut Self {
         self.description = description.to_string();
+        self
+    }
+
+    /**
+     Set type.
+     */
+    pub fn set_type(&mut self, r#type: SkillType) -> &mut Self {
+        self.r#type = r#type;
         self
     }
 }
@@ -57,7 +80,7 @@ impl From<&str> for Skill {
      Generate an unranked and descriptionless skill with just a `name`.
      */
     fn from(name: &str) -> Self {
-        Self { name: name.to_string(), rank: Rank::ZERO, description: String::from("") }
+        Self::from((name, Rank::ZERO))
     }
 }
 
@@ -66,7 +89,55 @@ impl From<(&str, i32)> for Skill {
      Generate a ranked (but descriptionless) skill from name/rank tuple.
      */
     fn from(value: (&str, i32)) -> Self {
-        Self { name: value.0.to_string(), rank: Rank::from(value.1), description: String::from("") }
+        Self::from((value.0, Rank::from(value.1)))
+    }
+}
+
+impl From<(&str, Rank)> for Skill {
+    /**
+     Generate a ranked (but descriptionless) skill from name/rank tuple.
+     */
+    fn from(value: (&str, Rank)) -> Self {
+        Self { name: value.0.to_string(), rank: value.1, description: String::from(""), r#type: SkillType::Unspecified }
+    }
+}
+
+impl From<(&str, SkillType)> for Skill {
+    /**
+     Generate an unranked skill with just name and type.
+     */
+    fn from(value: (&str, SkillType)) -> Self {
+        Self { name: value.0.to_string(), rank: Rank::ZERO, description: String::from(""), r#type: value.1 }
+    }
+}
+
+impl From<(&str, SkillType, i32)> for Skill {
+    /**
+     Generate a ranked skill with name, type and rank.
+     */
+    fn from(value: (&str, SkillType, i32)) -> Self {
+        Self::from((value.0, value.1, Rank::from(value.2)))
+    }
+}
+
+impl From<(&str, i32, SkillType)> for Skill {
+    fn from(value: (&str, i32, SkillType)) -> Self {
+        Self::from((value.0, value.2, value.1))
+    }
+}
+
+impl From<(&str, SkillType, Rank)> for Skill {
+    /**
+     Generate a ranked skill with name, type and rank.
+     */
+    fn from(value: (&str, SkillType, Rank)) -> Self {
+        Self { name: value.0.to_string(), rank: value.2, description: String::from(""), r#type: value.1 }
+    }
+}
+
+impl From<(&str, Rank, SkillType)> for Skill {
+    fn from(value: (&str, Rank, SkillType)) -> Self {
+        Self::from((value.0, value.2, value.1))
     }
 }
 
@@ -80,9 +151,8 @@ mod skill_tests {
 
     #[test]
     fn builder_model_works() {
-        let mut s = Skill::new();
-        s   .set_name("A Skill")
-            .set_rank(5)
+        let mut s = Skill::new("A Skill");
+        s   .set_rank(5.into())
             .set_description("A description!");
         assert_eq!("A Skill", s.name());
         assert_eq!(5, s.rank());
