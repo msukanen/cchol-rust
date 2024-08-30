@@ -1,6 +1,5 @@
 use rpga_rank::{rank::Rank, Ranked};
-
-use crate::traits::{Described, Named};
+use rpga_traits::{Described, Named};
 
 pub mod environment;
 pub mod survival;
@@ -144,7 +143,7 @@ impl From<(&str, Rank, SkillType)> for Skill {
 mod skill_tests {
     use rpga_rank::Ranked;
 
-    use crate::traits::{Described, Named};
+    use rpga_traits::{Described, Named};
 
     use super::Skill;
 

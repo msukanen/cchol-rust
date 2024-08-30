@@ -1,4 +1,4 @@
-use rpga_modifier::Modifiered;
+use rpga_traits::Modifiered;
 
 use crate::{base_culture::BaseCulture, skill::environment::Environment};
 
