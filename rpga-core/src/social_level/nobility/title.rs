@@ -25,6 +25,14 @@ pub enum Title {
 }
 
 impl Title {
+    /**
+     Generate a random noble title.
+
+     **Params**
+     * *culture* - some [Culture] reference.
+
+     **Returns** a noble [title][Title].
+     */
     pub fn random(culture: &Culture) -> Self {
         match culture.base() {
             BaseCulture::Primitive => match 1.d100() {
@@ -66,6 +74,56 @@ impl Title {
                 ..=90 => Self::Prince,
                 _ => Self::Knight
             }
+        }
+    }
+
+    /**
+     Generate (pseudo)random ***TiMod*** based on [Title].
+
+     **Params**
+     * *prince_parent_timod* - parents' ***TiMod*** if self is [Title::Prince], otherwise ignored.
+     
+     **Returns** ***TiMod***.
+     */
+    pub(crate) fn random_timod(&self, prince_parent_timod: Option<&i32>) -> i32 {
+        match self {
+            Self::Archduke |
+            Self::RoyalPrince => 4.d10(),
+            Self::Baron => 2.d10(),
+            Self::Baronet => 2.d8(),
+            Self::Chieftain |
+            Self::Count |
+            Self::Jarl => 3.d6(),
+            Self::Duke => 4.d8(),
+            Self::Emperor => 60,
+            Self::Hetman => 1.d6(),
+            Self::HighKing => 5.d10(),
+            Self::Kahn => 5.d8(),
+            Self::King => 39,
+            Self::Knight |
+            Self::Subchieftain => 2.d6(),
+            Self::Marquis => 3.d10(),
+            Self::Prince => match prince_parent_timod {
+                Some(t) => ((t * 1.d10() * 10) as f64 / 100.0) as i32,
+                _ => 4.d10()
+            },
+            Self::Viscount => 3.d8()
+        }
+    }
+}
+
+#[cfg(test)]
+mod title_tests {
+    use super::Title;
+
+    #[test]
+    fn prince_random_timod_works() {
+        let prince_parent_title = Title::Duke;
+        let parent_timod = prince_parent_title.random_timod(None);
+        let prince = Title::Prince;
+        for _ in 0..=10_000 {
+            let prince_timod = prince.random_timod(Some(&parent_timod));
+            assert!(prince_timod <= parent_timod);
         }
     }
 }
