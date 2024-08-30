@@ -1,3 +1,5 @@
+use crate::skill::Skill;
+
 /**
  A trait for anything with a "name".
  */
@@ -16,4 +18,14 @@ pub trait Described {
      Get the associated description.
      */
     fn description(&self) -> &str;
+}
+
+/**
+ A trait for anything with "skills".
+ */
+pub trait Skilled {
+    /**
+     Get the associated skills.
+     */
+    fn skills(&self) -> &Vec<Skill>;
 }

@@ -10,12 +10,6 @@ pub struct Culture {
     native_of: Environment,
 }
 
-impl PartialEq<BaseCulture> for Culture {
-    fn eq(&self, other: &BaseCulture) -> bool {
-        self.base.eq(other)
-    }
-}
-
 impl Modifiered for Culture {
     /**
      Get ***CuMod***.
