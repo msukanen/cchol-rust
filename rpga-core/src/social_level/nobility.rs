@@ -1,4 +1,4 @@
-use rpga_traits::Modifiered;
+use rpga_traits::{Modifiered, Named};
 use title::Title;
 
 use crate::culture::Culture;
@@ -32,5 +32,11 @@ impl Nobility {
             },
             _ => Self { timod: title.random_timod(None), title }
         }
+    }
+}
+
+impl Named for Nobility {
+    fn name(&self) -> &str {
+        self.title.as_str()
     }
 }

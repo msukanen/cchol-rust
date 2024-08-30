@@ -110,6 +110,35 @@ impl Title {
             Self::Viscount => 3.d8()
         }
     }
+
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Archduke => "Archduke",
+            Self::Baron => "Baron",
+            Self::Baronet => "Baronet",
+            Self::Chieftain => "Chieftain",
+            Self::Count => "Count (Earl)",
+            Self::Duke => "Duke",
+            Self::Emperor => "Emperor",
+            Self::Hetman => "Hetman",
+            Self::HighKing => "High-King",
+            Self::Jarl => "Jarl",
+            Self::Kahn => "Kahn",
+            Self::King => "King",
+            Self::Knight => "Knight",
+            Self::Marquis => "Marquis",
+            Self::Prince => "Prince",
+            Self::RoyalPrince => "Royal Prince",
+            Self::Subchieftain => "Subchieftain",
+            Self::Viscount => "Viscount",
+        }
+    }
+}
+
+impl std::fmt::Display for Title {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
 }
 
 #[cfg(test)]
