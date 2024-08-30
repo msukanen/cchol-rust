@@ -1,4 +1,4 @@
-use crate::skill::Skill;
+use crate::skill::{literacy::LiteracyRate, Skill};
 
 /**
  A trait for anything with a "name".
@@ -28,4 +28,11 @@ pub trait Skilled {
      Get the associated skills.
      */
     fn skills(&self) -> &Vec<Skill>;
+}
+
+/**
+ A trait for anything with "literacy".
+ */
+pub trait Literated {
+    fn literacy(&self) -> &Vec<LiteracyRate>;
 }

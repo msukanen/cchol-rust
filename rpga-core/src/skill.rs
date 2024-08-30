@@ -6,6 +6,7 @@ use crate::traits::{Described, Named};
 
 pub mod environment;
 pub mod survival;
+pub mod literacy;
 
 #[derive(Debug, Clone)]
 pub enum SkillType {
