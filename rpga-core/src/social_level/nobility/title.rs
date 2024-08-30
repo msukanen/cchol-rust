@@ -111,6 +111,95 @@ impl Title {
         }
     }
 
+    /**
+     Generate `num` random land title(s), if any.
+
+     **Param**
+     * *num* - number of land title(s) to generate.
+     
+     **Returns** a vec of strings.
+     */
+    pub(crate) fn random_land_titles(&self, num: i32) -> Vec<String> {
+        // Generate (optional) parts #2 and #3 of a land title.
+        fn part2_3() -> Option<(&'static str, &'static str)> {
+            // Generate part #3 of a land title.
+            fn part3() -> &'static str {
+                match 1.d20() {
+                    ..=1 => "Coasts",
+                    2 => "Creation",
+                    3 => "Domain",
+                    4 => "Downs",
+                    5 => "Fens",
+                    6 => "Forests",
+                    7 => "Garth",
+                    8 => "Heath",
+                    9 => "Hills",
+                    10 => "Isles",
+                    11 => "Marches",
+                    12 => "Moors",
+                    13 => "Mountains",
+                    14 => "Pale",
+                    15 => "Reaches",
+                    16 => "Shire",
+                    17 => "Steppe",
+                    18 => "Uplands",
+                    19 => "Wastes",
+                    _  => "Waves"
+                }
+            }
+
+            match 1.d20() {
+                ..=10 => None,
+                11 => Some(("Highland", part3())),
+                12 => Some(("Lowland", part3())),
+                13 => Some(("Upper", part3())),
+                14 => Some(("Lower", part3())),
+                15 => Some(("Seaward", part3())),
+                16 => Some(("Northern", part3())),
+                17 => Some(("Eastern", part3())),
+                18 => Some(("Southern", part3())),
+                19 => Some(("Western", part3())),
+                _  => Some(("Frozen", part3()))
+            }
+        }
+
+        let mut land_titles = vec![];
+        for _ in 0..num {
+            let p1 = match 1.d20() {
+                ..=1 => "Commander",
+                2 => "Custodian",
+                3 => "Grim Sentinel",
+                4 => "High Champion",
+                5 => "Honored Defender",
+                6 => "Iron Tower",
+                7 => "Lord Protector",
+                8 => "Liberator",
+                9 => "Lord Governor",
+                10 => "Lord Guardian",
+                11 => "Keeper",
+                12 => "Preserver",
+                13 => "Marshall",
+                14 => "Ranger",
+                15 => "Regent",
+                16 => "Retaliator",
+                17 => "Swordmaster",
+                18 => "Vindicator",
+                19 => "Warden",
+                _  => "Watchwarder"
+            };
+            if let Some(p2_3) = part2_3() {
+                land_titles.push(format!("{p1} of the {} {}", p2_3.0, p2_3.1))
+            } else {
+                land_titles.push(p1.to_string())
+            }
+        }
+
+        land_titles
+    }
+
+    /**
+     **Returns** self stringified as `&str`.
+     */
     pub fn as_str(&self) -> &str {
         match self {
             Self::Archduke => "Archduke",
