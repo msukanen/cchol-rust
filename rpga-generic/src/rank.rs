@@ -1,3 +1,4 @@
+/// Skill etc. rank.
 #[derive(Debug, Clone)]
 pub struct Rank {
     value: i32,

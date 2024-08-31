@@ -1,3 +1,5 @@
+use rank::Rank;
+
 pub mod gender;
 pub mod rank;
 

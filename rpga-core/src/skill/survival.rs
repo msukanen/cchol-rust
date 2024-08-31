@@ -1,4 +1,4 @@
-use rpga_rank::rank::Rank;
+use rpga_generic::rank::Rank;
 
 use super::{Skill, SkillType};
 
