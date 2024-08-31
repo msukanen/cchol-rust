@@ -31,7 +31,7 @@ impl Nobility {
      */
     pub fn random(culture: &Culture) -> Option<Self> {
         if 1.d100() + culture.modifier() < 99 { return None }
-        
+
         let title = Title::random(culture);
         match title {
             Title::Prince => {
@@ -57,6 +57,16 @@ impl Nobility {
                 title,
             })
         }
+    }
+
+    /// Get land titles.
+    pub fn land_titles(&self) -> &Vec<String> {
+        &self.land_titles
+    }
+
+    /// Get land holdings in sq.km, if any.
+    pub fn land_holdings(&self) -> Option<i32> {
+        self.land_holdings
     }
 }
 
