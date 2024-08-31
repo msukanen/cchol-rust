@@ -40,7 +40,7 @@ impl WealthRank {
         let mut rank = choice(culture.modifier(), timod);
         // Some 'Wealthy' are 'Extremely Wealthy'; let the dice decide if so...
         match rank {
-            Self::Wealthy(_) => if 1.d100() <= 1 + if let Some(t) = timod {t.modifier()} else {0} {
+            Self::Wealthy(_) => if 1.d100() <= 1 + timod {
                 rank = Self::Wealthy(true)
             },
             _ => ()
@@ -90,8 +90,8 @@ impl Wealth {
      * *cumod* - ***CuMod***.
      * *timod* - ***TiMod***.
      */
-    pub fn random(culture: &impl Modifiered, timod: i32) -> Self {
-        let rank = WealthRank::random(cumod, timod);
+    pub fn random(culture: &Culture, timod: i32) -> Self {
+        let rank = WealthRank::random(culture, timod);
 
         Self { survival_mod: rank.random_survival_mod(), rank }
     }
