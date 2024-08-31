@@ -114,12 +114,9 @@ impl Title {
     /**
      Generate `num` random land title(s), if any.
 
-     **Param**
-     * *num* - number of land title(s) to generate.
-     
      **Returns** a vec of strings.
      */
-    pub(crate) fn random_land_titles(&self, num: i32) -> Vec<String> {
+    pub(crate) fn random_land_titles(&self) -> Vec<String> {
         // Generate (optional) parts #2 and #3 of a land title.
         fn part2_3() -> Option<(&'static str, &'static str)> {
             // Generate part #3 of a land title.
@@ -164,7 +161,22 @@ impl Title {
         }
 
         let mut land_titles = vec![];
-        for _ in 0..num {
+        for _ in 0..match self {
+            Self::Archduke => 1.d3() + 1,
+            Self::Baron    => if 1.d100() < 76 {1} else {0},
+            Self::Baronet  => if 1.d100() < 51 {1} else {0},
+            Self::Count    => if 1.d100() < 91 {1} else {0},
+            Self::Duke     => 1.d3(),
+            Self::Emperor  => 1.d4() + 3,
+            Self::HighKing |
+            Self::Kahn     => 1.d6(),
+            Self::King     => 1.d4() + 1,
+            Self::Knight   => if 1.d100() < 36 {1} else {0},
+            Self::Marquis  => 1.d2(),
+            Self::RoyalPrince => 1.d4(),
+            Self::Viscount => 1,
+            _ => 0
+        } {
             let p1 = match 1.d20() {
                 ..=1 => "Commander",
                 2 => "Custodian",

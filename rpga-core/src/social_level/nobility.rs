@@ -8,6 +8,7 @@ pub mod title;
 pub struct Nobility {
     title: Title,
     timod: i32,
+    land_titles: Vec<String>,
 }
 
 impl Modifiered for Nobility {
@@ -18,6 +19,14 @@ impl Modifiered for Nobility {
 }
 
 impl Nobility {
+    /**
+     Generate random (culturally appropriate) nobility thingy.
+
+     **Params**
+     * *culture* - a [Culture] reference.
+     
+     **Returns** some [Nobility] data.
+     */
     pub fn random(culture: &Culture) -> Self {
         let title = Title::random(culture);
         match title {
@@ -28,9 +37,13 @@ impl Nobility {
                 }
                 let timod = prince_parent_title.random_timod(None);
                 let timod= title.random_timod(Some(&timod));
-                Self { title, timod }
+                Self { title, timod, land_titles: vec![] }
             },
-            _ => Self { timod: title.random_timod(None), title }
+            _ => Self {
+                timod: title.random_timod(None),
+                land_titles: title.random_land_titles(),
+                title,
+            }
         }
     }
 }
