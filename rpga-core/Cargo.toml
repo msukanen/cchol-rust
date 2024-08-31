@@ -8,6 +8,5 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 rand = "0.8"
 dicebag = "0.2"
-rpga-rank = { path="../rpga-rank" }
 rpga-traits = { path="../rpga-traits" }
 rpga-generic = { path="../rpga-generic" }

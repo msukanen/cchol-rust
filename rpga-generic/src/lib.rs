@@ -1,16 +1,12 @@
 pub mod gender;
+pub mod rank;
 
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+/**
+ A trait for anything with "rank".
+ */
+pub trait Ranked {
+    /**
+     Get the associated rank value.
+     */
+    fn rank(&self) -> &Rank;
 }
