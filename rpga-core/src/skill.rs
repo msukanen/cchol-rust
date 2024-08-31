@@ -1,4 +1,4 @@
-use rpga_rank::{rank::Rank, Ranked};
+use rpga_generic::{rank::Rank, Ranked};
 use rpga_traits::{Described, Named};
 
 pub mod environment;
@@ -141,7 +141,7 @@ impl From<(&str, Rank, SkillType)> for Skill {
 
 #[cfg(test)]
 mod skill_tests {
-    use rpga_rank::Ranked;
+    use rpga_generic::Ranked;
 
     use rpga_traits::{Described, Named};
 
