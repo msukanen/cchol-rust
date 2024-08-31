@@ -5,3 +5,4 @@ pub mod traits;
 pub mod social_level;
 pub mod race;
 pub mod birth;
+pub mod family;
