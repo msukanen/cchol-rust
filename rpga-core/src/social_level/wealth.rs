@@ -1,5 +1,6 @@
 use dicebag::DiceExt;
 use rpga_traits::Modifiered;
+use crate::culture::Culture;
 
 /// Various wealth levels.
 pub enum WealthRank {
@@ -23,7 +24,7 @@ impl WealthRank {
      * *cumod* - ***CuMod***.
      * *timod* - ***TiMod***.
      */
-    pub(crate) fn random(cumod: Option<&impl Modifiered>, timod: Option<&impl Modifiered>) -> Self {
+    pub(crate) fn random(culture: &Culture, timod: i32) -> Self {
         fn choice(cumod: i32, timod: i32) -> WealthRank {
             match 1.d100() + cumod + timod {
                 ..=12 => WealthRank::Destitute,
@@ -36,10 +37,7 @@ impl WealthRank {
             }
         }
 
-        let mut rank = choice(
-            if let Some(m) = cumod {m.modifier()} else {0},
-            if let Some(t) = timod {t.modifier()} else {0}
-        );
+        let mut rank = choice(culture.modifier(), timod);
         // Some 'Wealthy' are 'Extremely Wealthy'; let the dice decide if so...
         match rank {
             Self::Wealthy(_) => if 1.d100() <= 1 + if let Some(t) = timod {t.modifier()} else {0} {
@@ -92,7 +90,7 @@ impl Wealth {
      * *cumod* - ***CuMod***.
      * *timod* - ***TiMod***.
      */
-    pub fn random(cumod: Option<&impl Modifiered>, timod: Option<&impl Modifiered>) -> Self {
+    pub fn random(culture: &impl Modifiered, timod: i32) -> Self {
         let rank = WealthRank::random(cumod, timod);
 
         Self { survival_mod: rank.random_survival_mod(), rank }
