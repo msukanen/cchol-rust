@@ -1,4 +1,4 @@
-use dicebag::DiceExt;
+use dicebag::{chance_of, DiceExt};
 
 use crate::{base_culture::BaseCulture, culture::Culture};
 
@@ -232,6 +232,38 @@ impl Title {
             Self::RoyalPrince => "Royal Prince",
             Self::Subchieftain => "Subchieftain",
             Self::Viscount => "Viscount",
+        }
+    }
+
+    /**
+     Generate random land holdings (in sq.km, if any at all).
+
+     **Returns** (optional) sq.km of land holdings.
+     */
+    pub(crate) fn random_land_holdings(&self, prince_has_land: Option<bool>) -> Option<i32> {
+        match self {
+            Self::Archduke => chance_of!(75, 1.d10() * 5).into(),
+            Self::Baron => chance_of!(60, 1.d10() + 4).into(),
+            Self::Baronet => chance_of!(30, 1.d10()).into(),
+            Self::Chieftain => chance_of!(40, 2.d6() + 8).into(),
+            Self::Count => chance_of!(40, 1.d20() + 4).into(),
+            Self::Duke => chance_of!(85, 1.d10() * 5).into(),
+            Self::Emperor => (1.d20() * 10).into(),
+            Self::Hetman => chance_of!(85, 1.d4()).into(),
+            Self::HighKing => chance_of!(85, 1.d20() * 5).into(),
+            Self::Jarl => chance_of!(70, 1.d6() + 4).into(),
+            Self::Kahn => chance_of!(30, 1.d10() * 5).into(),
+            Self::King => (1.d10() * 10).into(),
+            Self::Knight => chance_of!(60, 1.d4()).into(),
+            Self::Marquis => chance_of!(60, 1.d20() + 12).into(),
+            Self::Prince => if let Some(hl) = prince_has_land {
+                if hl {
+                    (1.d10() * 5).into()
+                } else { None }
+            } else { None },
+            Self::RoyalPrince => chance_of!(70, 1.d20() * 5).into(),
+            Self::Subchieftain => chance_of!(30, 1.d8()).into(),
+            Self::Viscount => chance_of!(50, 1.d20() + 10).into()
         }
     }
 }
