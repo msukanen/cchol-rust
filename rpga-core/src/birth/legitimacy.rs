@@ -20,13 +20,13 @@ impl BirthLegitimacy {
      */
     pub fn random(culture: &Culture) -> Self {
         fn illegitmacy_reason(culture: &Culture) -> &'static str {
-            static R1: &'static str = "R1";//TODO: reasons...
-            static R2: &'static str = "R2";
-            static R3: &'static str = "R3";
-            static R4: &'static str = "R4";
-            static R5: &'static str = "R5";
-            static R6: &'static str = "R6";
-            static R7: &'static str = "R7";
+            static R1: &'static str = "Mother was a common prostitute and unmarried.";//TODO: reasons...
+            static R2: &'static str = "Mother was raped - remained unmarried. Father's identity is known.";
+            static R3: &'static str = "Mother was raped - remained unmarried. Father's identity is unknown.";
+            static R4: &'static str = "Mother was unmarried and father's identity is unknown.";
+            static R5: &'static str = "Mother was unmarried but father's identity is known.";
+            static R6: &'static str = "Mother was a courtesan (prostitute to Nobility). Father's identity is unknown.";
+            static R7: &'static str = "Mother was a courtesan (prostitute to Nobility). Father's identity is known.";
             match 1.d20() + culture.modifier() {
                 ..=12 => R1,
                 ..=14 => if 1.d100() < 16 {R2} else {R3},
