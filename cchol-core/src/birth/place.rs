@@ -3,6 +3,9 @@ use rpga_traits::Modifiered;
 
 use crate::{culture::Culture, deities_t864::Deity};
 
+//TODO: fleshen out the enums PlaceOfBirth and ExoticPlaceOfBirth.
+
+/// Various "normal" places of birth.
 pub enum PlaceOfBirth {
     P1,
     P2,
@@ -15,6 +18,7 @@ pub enum PlaceOfBirth {
     Exotic(ExoticPlaceOfBirth),
 }
 
+/// Various exotic places of birth.
 pub enum ExoticPlaceOfBirth {
     Combined(Box<ExoticPlaceOfBirth>, Box<ExoticPlaceOfBirth>),
     P1 { deity: Deity },

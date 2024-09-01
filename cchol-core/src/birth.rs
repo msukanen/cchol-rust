@@ -6,6 +6,7 @@ use crate::culture::Culture;
 
 pub mod legitimacy;
 pub mod place;
+pub mod unusual;
 
 /// Birth and everything associated with it.
 pub struct Birth {
