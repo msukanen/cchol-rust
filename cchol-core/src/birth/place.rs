@@ -117,7 +117,7 @@ impl Modifiered for ExoticPlaceOfBirth {
             Self::P1 {..}|
             Self::P7     |
             Self::P14 => 15,
-            Self::P2  => 8,
+            Self::P2 {..}=> 8,
             Self::P3  |
             Self::P6  |
             Self::P10 => 5,

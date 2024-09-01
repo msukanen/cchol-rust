@@ -4,7 +4,6 @@ pub mod gender;
 pub mod rank;
 pub mod skill;
 pub mod birth;
-pub mod alignment;
 
 /**
  A trait for anything with "rank".
