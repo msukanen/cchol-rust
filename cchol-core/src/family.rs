@@ -50,7 +50,7 @@ impl Family {
                 },
                 ..=18 => FamilyStructure::Mother,
                 19 => FamilyStructure::Father,
-                20 => FamilyStructure::Guardian,
+                20 => FamilyStructure::Guardian,//TODO: Guardian
                 ..=24 => FamilyStructure::None1,
                 _ => FamilyStructure::Orphanage
             }

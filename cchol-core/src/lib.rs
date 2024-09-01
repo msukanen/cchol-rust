@@ -6,3 +6,4 @@ pub mod social_level;
 pub mod race;
 pub mod birth;
 pub mod family;
+pub mod deities_t864;

@@ -32,4 +32,9 @@ impl Birth {
         let legitimacy = BirthLegitimacy::random(culture);
         Self { place: PlaceOfBirth::random(culture, legitimacy.modifier()), legitimacy }
     }
+
+    /// Get place of birth.
+    pub fn place(&self) -> &PlaceOfBirth {
+        &self.place
+    }
 }
