@@ -118,4 +118,14 @@ impl Family {
     pub fn siblings(&self) -> &Vec<(bool, Gender)> {
         &self.siblings
     }
+
+    /// Get birth order.
+    pub fn birth_order(&self) -> &BirthOrder {
+        &self.birth_order
+    }
+
+    /// Get adoption status.
+    pub fn adopted(&self) -> bool {
+        self.adopted
+    }
 }
