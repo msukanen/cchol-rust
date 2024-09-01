@@ -134,6 +134,7 @@ impl UnusualBirthOccurance {
                     _    => UBO39_44H::O10
                 };
                 
+                // Reroll dupes - we want only one entry of a kind.
                 if ubo.contains(&v) { ch_ubo(ubo) } else { v }
             }
 
@@ -150,6 +151,7 @@ impl UnusualBirthOccurance {
                 38    => UnusualBirthOccurance::O38,
                 ..=41 => {
                     let mut ubo = HashSet::new();
+                    // Select 1d3 entries, rerolling dupes.
                     for _ in 0..1.d3() {
                         ubo.insert(ch_ubo(&ubo));
                     }
@@ -169,6 +171,7 @@ impl UnusualBirthOccurance {
                 },
                 ..=44 => {
                     let mut ubo = HashSet::new();
+                    // Select 1d3 entries, rerolling dupes.
                     for _ in 0..1.d3() {
                         ubo.insert(ch_ubo(&ubo));
                     }
