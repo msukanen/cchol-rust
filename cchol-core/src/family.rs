@@ -20,7 +20,7 @@ pub enum FamilyStructure {
     Uncle { relation: Gender },
     AuntAndUncle { relation: Gender },
     //--past this, recheck if Guardian was rolled
-    Guardian,
+    Guardian,//TODO: generate Guardian specs, T#754
     None1,
     Orphanage,
 }
@@ -29,6 +29,7 @@ pub enum FamilyStructure {
 pub struct Family {
     structure: FamilyStructure,
     adopted: bool,
+    siblings: Vec<(bool, Gender)>,
 }
 
 impl Family {
@@ -70,8 +71,25 @@ impl Family {
                 }
             }
         }
+        
+        let mut siblings = vec![];
+        loop {
+            match 1.d20() {
+                ..=2 => (),
+                ..=9 => for _ in 0..1.d3() {siblings.push((false, Gender::random()))},
+                ..=15 => for _ in 0..1.d3()+1 {siblings.push((false, Gender::random()))},
+                ..=17 => for _ in 0..1.d4()+2 {siblings.push((false, Gender::random()))},
+                ..=19 => for _ in 0..2.d4() {siblings.push((false, Gender::random()))},
+                _ => {
+                    // 1-3 illegitimate siblings.
+                    for _ in 0..1.d3() {siblings.push((true, Gender::random()))};
+                    continue;
+                }
+            }
+            break;
+        }
 
-        Self { structure, adopted }
+        Self { structure, adopted, siblings }
     }
 
     /// Readjust status, if needed.
@@ -89,5 +107,10 @@ impl Family {
             },
             _ => status
         }
+    }
+
+    /// Get siblings' gender vector, if any exist.
+    pub fn siblings(&self) -> &Vec<(bool, Gender)> {
+        &self.siblings
     }
 }
