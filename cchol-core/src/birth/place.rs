@@ -1,4 +1,5 @@
 use dicebag::DiceExt;
+use rpga_traits::Modifiered;
 
 use crate::{culture::Culture, deities_t864::Deity};
 
@@ -86,5 +87,47 @@ impl PlaceOfBirth {
         }
 
         choice(culture, legit_mod)
+    }
+}
+
+impl Modifiered for PlaceOfBirth {
+    fn modifier(&self) -> i32 {
+        match self {
+            Self::P1 => -5,
+            Self::P2 => -7,
+            Self::P3 |
+            Self::P4 |
+            Self::P7 => 1,
+            Self::P5(p) => 2 + p.modifier(),
+            Self::P6 => 5,
+            Self::P8 => 2,
+            Self::Exotic(p) => p.modifier()
+        }
+    }
+}
+
+impl Modifiered for ExoticPlaceOfBirth {
+    fn modifier(&self) -> i32 {
+        match self {
+            Self::Combined(a, b) => a.modifier() + b.modifier(),
+            Self::P1 {..}|
+            Self::P7     |
+            Self::P14 => 15,
+            Self::P2  => 8,
+            Self::P3  |
+            Self::P6  |
+            Self::P10 => 5,
+            Self::P4  |
+            Self::P5  |
+            Self::P8  |
+            Self::P11 |
+            Self::P16 => 2,
+            Self::P9  |
+            Self::P15 => 10,
+            Self::P12 => 25,
+            Self::P13 {..}|
+            Self::P18 => 20,
+            Self::P17 => 9,
+        }
     }
 }
