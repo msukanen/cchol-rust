@@ -1,3 +1,5 @@
+pub mod environment;
+
 use rpga_traits::{Described, Named};
 
 use crate::{rank::Rank, Ranked};

@@ -1,7 +1,7 @@
 use std::sync::LazyLock;
 
 use dicebag::DiceExt;
-use rpga_generic::skill::{Skill, Skilled};
+use rpga_generic::skill::{environment::Environment, Skill, Skilled};
 
 use crate::{culture::Culture, skill::survival::{make_survival_native_of, make_survival_not_native_of, make_survival_urban, make_survival_wilds}};
 
@@ -37,9 +37,7 @@ static SKILLS_DECADENT_CIV: LazyLock<Vec<Skill>> = LazyLock::new(|| {
     skills
 });
 
-/**
- Various culture levels.
- */
+/// Various culture levels.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum BaseCulture {
     Primitive,
@@ -49,9 +47,7 @@ pub enum BaseCulture {
 }
 
 impl BaseCulture {
-    /**
-     Generate a random culture level.
-     */
+    /// Generate a random culture level.
     pub fn random() -> Self {
         match 1.d10() {
             ..=1 => Self::Primitive,
@@ -59,6 +55,25 @@ impl BaseCulture {
             ..=6 => Self::Barbarian,
             ..=9 => Self::Civilized(false),
             _    => Self::Civilized(true),
+        }
+    }
+
+    /**
+     Generate (pseudo)random native environment based on culture.
+     Some cultures have only fixed native environment while others are more dynamic.
+
+     **Params**
+     * `base_culture` - base [culture][BaseCulture] reference.
+     
+     **Returns** one or other [Environment].
+     */
+    pub(crate) fn random_native_env(&self) -> Environment {
+        match self {
+            Self::Primitive        => Environment::Wilderness,
+            Self::Nomad            => Environment::Wilderness,
+            Self::Barbarian        => if 1.d3() == 1 {Environment::Urban} else {Environment::Wilderness},
+            Self::Civilized(false) => if 1.d3() == 1 {Environment::Wilderness} else {Environment::Urban},
+            _                      => Environment::Urban
         }
     }
 }

@@ -1,9 +1,10 @@
+use rpga_generic::skill::environment::Environment;
 use rpga_traits::Modifiered;
 
-use crate::{base_culture::BaseCulture, skill::environment::Environment};
+use crate::base_culture::BaseCulture;
 
 /**
- Core culture info.
+ Core culture info resides here.
  */
 pub struct Culture {
     base: BaseCulture,
@@ -11,9 +12,7 @@ pub struct Culture {
 }
 
 impl Modifiered for Culture {
-    /**
-     Get ***CuMod***.
-     */
+    /// Get ***CuMod***.
     fn modifier(&self) -> i32 {
         match self.base {
             BaseCulture::Primitive => -3,
@@ -26,47 +25,37 @@ impl Modifiered for Culture {
 }
 
 impl Culture {
-    /**
-     Get the native environment.
-     */
+    /// Get the native environment.
     pub fn native_of(&self) -> &Environment {
         &self.native_of
     }
 
-    /**
-     Get the base culture.
-     */
+    /// Get the base culture.
     pub fn base(&self) -> &BaseCulture {
         &self.base
     }
 
-    /**
-     Generate a completely random culture.
-     */
+    /// Generate a random culture.
     pub fn random() -> Self {
         let base = BaseCulture::random();
         Self {
-            native_of: Environment::random_for(&base),
+            native_of: base.random_native_env(),
             base,
         }
     }
 }
 
 impl From<BaseCulture> for Culture {
-    /**
-     Derive [Culture] from [BaseCulture]. Native environment will be (pseudo)randomized.
-     */
+    /// Derive [Culture] from [BaseCulture]. Native environment will be (pseudo)randomized.
     fn from(base: BaseCulture) -> Self {
-        Self { native_of: Environment::random_for(&base), base }
+        Self { native_of: base.random_native_env(), base }
     }
 }
 
 impl From<&BaseCulture> for Culture {
-    /**
-     Derive [Culture] from [BaseCulture]. Native environment will be (pseudo)randomized.
-     */
+    /// Derive [Culture] from [BaseCulture]. Native environment will be (pseudo)randomized.
     fn from(base: &BaseCulture) -> Self {
-        Self { base: base.clone(), native_of: Environment::random_for(base) }
+        Self { base: base.clone(), native_of: base.random_native_env() }
     }
 }
 
@@ -83,7 +72,9 @@ impl From<(BaseCulture, Environment)> for Culture {
 
 #[cfg(test)]
 mod culture_tests {
-    use crate::{base_culture::BaseCulture, skill::environment::Environment};
+    use rpga_generic::skill::environment::Environment;
+
+    use crate::base_culture::BaseCulture;
 
     use super::Culture;
 
