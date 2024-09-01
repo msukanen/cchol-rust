@@ -46,3 +46,13 @@ impl BirthLegitimacy {
         }
     }
 }
+
+impl Modifiered for BirthLegitimacy {
+    /// Get ***LegitMod***.
+    fn modifier(&self) -> i32 {
+        match self {
+            Self::Legitimate => 0,
+            Self::Illegitimate(x,_) => *x
+        }
+    }
+}

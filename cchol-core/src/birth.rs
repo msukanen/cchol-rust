@@ -1,21 +1,16 @@
 use legitimacy::BirthLegitimacy;
+use place::PlaceOfBirth;
 use rpga_traits::Modifiered;
 
+use crate::culture::Culture;
+
 pub mod legitimacy;
+pub mod place;
 
 /// Birth and everything associated with it.
 pub struct Birth {
     legitimacy: BirthLegitimacy,
-}
-
-impl Modifiered for Birth {
-    /// Get ***BiMod***.
-    fn modifier(&self) -> i32 {
-        match self.legitimacy {
-            BirthLegitimacy::Legitimate => 0,
-            BirthLegitimacy::Illegitimate(x,_) => x
-        }
-    }
+    place: PlaceOfBirth
 }
 
 impl Birth {
@@ -25,5 +20,16 @@ impl Birth {
             BirthLegitimacy::Legitimate => None,
             BirthLegitimacy::Illegitimate(_,r) => Some(r)
         }
+    }
+
+    /// Get ***LegitMod***.
+    pub fn legit_mod(&self) -> i32 {
+        self.legitimacy.modifier()
+    }
+
+    /// Generate random birth condition(s).
+    pub fn random(culture: &Culture) -> Self {
+        let legitimacy = BirthLegitimacy::random(culture);
+        Self { place: PlaceOfBirth::random(culture, legitimacy.modifier()), legitimacy }
     }
 }
