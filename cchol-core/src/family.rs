@@ -1,5 +1,5 @@
 use dicebag::{lo, DiceExt, HiLo};
-use rpga_generic::gender::Gender;
+use rpga_generic::{birth::order::BirthOrder, gender::Gender};
 use rpga_traits::Modifiered;
 
 use crate::{culture::Culture, social_level::{status::Status, wealth::{Wealth, WealthRank}}};
@@ -30,6 +30,7 @@ pub struct Family {
     structure: FamilyStructure,
     adopted: bool,
     siblings: Vec<(bool, Gender)>,
+    birth_order: BirthOrder,
 }
 
 impl Family {
@@ -71,7 +72,7 @@ impl Family {
                 }
             }
         }
-        
+
         let mut siblings = vec![];
         loop {
             match 1.d20() {
@@ -89,7 +90,11 @@ impl Family {
             break;
         }
 
-        Self { structure, adopted, siblings }
+        Self {
+            structure, adopted,
+            birth_order: BirthOrder::random(siblings.len()),
+            siblings
+        }
     }
 
     /// Readjust status, if needed.
