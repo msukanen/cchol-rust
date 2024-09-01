@@ -3,9 +3,7 @@ use rpga_traits::Modifiered;
 
 pub mod legitimacy;
 
-/**
- Birth and everything associated with it.
- */
+/// Birth and everything associated with it.
 pub struct Birth {
     legitimacy: BirthLegitimacy,
 }

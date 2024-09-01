@@ -62,9 +62,6 @@ impl BaseCulture {
      Generate (pseudo)random native environment based on culture.
      Some cultures have only fixed native environment while others are more dynamic.
 
-     **Params**
-     * `base_culture` - base [culture][BaseCulture] reference.
-     
      **Returns** one or other [Environment].
      */
     pub(crate) fn random_native_env(&self) -> Environment {

@@ -27,6 +27,11 @@ impl Status {
 
         Self { wealth, nobility }
     }
+
+    /// Set wealth (in place).
+    pub fn set_wealth(&mut self, wealth: Wealth) {
+        self.wealth = wealth
+    }
 }
 
 impl Modifiered for Status {

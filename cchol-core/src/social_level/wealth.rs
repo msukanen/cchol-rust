@@ -79,7 +79,7 @@ impl Modifiered for WealthRank {
  */
 pub struct Wealth {
     rank: WealthRank,
-    survival_mod: i32,
+    pub(crate) survival_mod: i32,
 }
 
 impl Wealth {
@@ -106,5 +106,11 @@ impl Modifiered for Wealth {
     /// Get ***SolMod***.
     fn modifier(&self) -> i32 {
         self.rank.modifier()
+    }
+}
+
+impl From<WealthRank> for Wealth {
+    fn from(rank: WealthRank) -> Self {
+        Self { survival_mod: rank.random_survival_mod(), rank }
     }
 }

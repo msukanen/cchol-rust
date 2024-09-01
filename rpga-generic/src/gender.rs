@@ -1,4 +1,4 @@
-use dicebag::DiceExt;
+use dicebag::{lo, DiceExt, HiLo};
 
 /// Genders.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -37,10 +37,16 @@ impl Gender {
         }
     }
 
+    /// Get opposite sex.
     pub fn opposite(&self) -> Self {
         match self {
             Self::Male => Self::Female,
             Self::Female => Self::Male
         }
+    }
+
+    /// Generate random maternal/paternal relation.
+    pub fn maternal_or_paternal() -> Self {
+        if lo!() { Self::Male } else { Self::Female }
     }
 }
