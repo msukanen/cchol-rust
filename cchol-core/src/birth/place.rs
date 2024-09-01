@@ -1,6 +1,6 @@
 use dicebag::DiceExt;
 
-use crate::culture::Culture;
+use crate::{culture::Culture, deities_t864::Deity};
 
 pub enum PlaceOfBirth {
     P1,
@@ -16,7 +16,7 @@ pub enum PlaceOfBirth {
 
 pub enum ExoticPlaceOfBirth {
     Combined(Box<ExoticPlaceOfBirth>, Box<ExoticPlaceOfBirth>),
-    P1,
+    P1 { deity: Deity },
     P2 { among_camp_followers: bool },
     P3,
     P4,
@@ -28,7 +28,7 @@ pub enum ExoticPlaceOfBirth {
     P10,
     P11,
     P12,
-    P13,
+    P13 { deity: Deity },
     P14,
     P15,
     P16,
@@ -64,7 +64,7 @@ impl PlaceOfBirth {
         fn exotic_choice(culture: &Culture) -> ExoticPlaceOfBirth {
             match 1.d20() {
                 ..=2 => ExoticPlaceOfBirth::Combined(Box::new(exotic_choice(culture)), Box::new(exotic_choice(culture))),
-                3 => todo!("ExoticPlaceOfBirth::P1 - Deity"),
+                3 => ExoticPlaceOfBirth::P1 { deity: Deity::random(culture, false)},
                 4 => ExoticPlaceOfBirth::P2 { among_camp_followers: 1.d6() < 6 },
                 5 => ExoticPlaceOfBirth::P3,
                 6 => ExoticPlaceOfBirth::P4,
@@ -76,7 +76,7 @@ impl PlaceOfBirth {
                 12 => ExoticPlaceOfBirth::P10,
                 13 => ExoticPlaceOfBirth::P11,
                 14 => ExoticPlaceOfBirth::P12,
-                15 => ExoticPlaceOfBirth::P13,
+                15 => ExoticPlaceOfBirth::P13 { deity: Deity::random(culture, true)},
                 16 => ExoticPlaceOfBirth::P14,
                 17 => ExoticPlaceOfBirth::P15,
                 18 => ExoticPlaceOfBirth::P16,

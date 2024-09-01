@@ -30,7 +30,7 @@ pub enum Deity {
 
 impl Deity {
     /// Generate a random (culturally appropriate) deity.
-    pub fn random(culture: &Culture) -> Self {
+    pub fn random(culture: &Culture, evil_by_default: bool) -> Self {
         fn choice(culture: &Culture, evil: bool, disguised: bool, decadent: bool) -> Deity {
             match 1.d20() + culture.modifier() {
                 ..=1 => Deity::AncestorWorship { evil },
@@ -63,6 +63,6 @@ impl Deity {
             }
         }
 
-        choice(culture, false, false, false)
+        choice(culture, evil_by_default, false, false)
     }
 }
