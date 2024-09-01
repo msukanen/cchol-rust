@@ -6,4 +6,4 @@ authors = ["Markku Sukanen"]
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-rpga-core = { path = "../rpga-core" }
+cchol-core = { path = "../cchol-core" }

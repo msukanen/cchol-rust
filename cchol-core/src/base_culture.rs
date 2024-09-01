@@ -1,8 +1,9 @@
 use std::sync::LazyLock;
 
 use dicebag::DiceExt;
+use rpga_generic::skill::{Skill, Skilled};
 
-use crate::{culture::Culture, skill::{survival::{make_survival_native_of, make_survival_not_native_of, make_survival_urban, make_survival_wilds}, Skill}, traits::Skilled};
+use crate::{culture::Culture, skill::survival::{make_survival_native_of, make_survival_not_native_of, make_survival_urban, make_survival_wilds}};
 
 static SKILLS_PRIMITIVE: LazyLock<Vec<Skill>> = LazyLock::new(|| {
     let mut skills = vec![];

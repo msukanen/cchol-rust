@@ -1,6 +1,4 @@
-use rpga_generic::rank::Rank;
-
-use super::{Skill, SkillType};
+use rpga_generic::{rank::Rank, skill::{Skill, SkillType}};
 
 pub fn make_survival_urban(rank: Rank) -> Skill {
     let mut s = Skill::from(("Survival: Urban", SkillType::Outdoors, rank));
