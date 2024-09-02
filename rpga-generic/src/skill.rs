@@ -1,18 +1,11 @@
 pub mod environment;
+pub mod r#type;
+pub mod direction;
 
 use rpga_traits::{Described, Named};
+use r#type::SkillType;
 
 use crate::{rank::Rank, Ranked};
-
-/// Various skill types.
-#[derive(Debug, Clone)]
-pub enum SkillType {
-    Magic,
-    Outdoors,
-    Profession,
-    Stealth,
-    Unspecified,
-}
 
 /// Skill data lives here.
 #[derive(Debug, Clone)]
