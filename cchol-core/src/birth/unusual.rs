@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use dicebag::DiceExt;
-use rpga_generic::gender::Gender;
+use rpga_generic::{birth::mark::Birthmark, gender::Gender};
 
 /// Some unusual birth circumstance containers.
 pub enum UnusualBirth {
@@ -105,7 +105,7 @@ pub enum UnusualBirthOccurance {
     O57,
     O58_62,//TODO: change family state to 'adopted'
     O63_64,//TODO: tragedy 528
-    O65_69,//TODO: birthmark 866
+    O65_69(Birthmark),
     O70_75,//TODO: curse 868
     O76_81,//TODO: blessing 869
     O82_85(Gender),
@@ -201,7 +201,7 @@ impl UnusualBirthOccurance {
                 57    => UnusualBirthOccurance::O57,
                 ..=62 => UnusualBirthOccurance::O58_62,
                 ..=64 => todo!("UnusualBirthOccurance::O63_64"),
-                ..=69 => todo!("UnusualBirthOccurance::O65_69"),
+                ..=69 => UnusualBirthOccurance::O65_69(Birthmark::random()),
                 ..=75 => todo!("UnusualBirthOccurance::O70_75"),
                 ..=81 => todo!("UnusualBirthOccurance::O76_81"),
                 ..=85 => UnusualBirthOccurance::O82_85(Gender::random()),
