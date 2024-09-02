@@ -1,3 +1,5 @@
+use dicebag::{lo, DiceExt, HiLo};
+
 /// Anything directional...
 pub enum Direction {
     North,
@@ -10,4 +12,7 @@ pub enum Direction {
     Right,
 }
 
-pub fn 
+impl Direction {
+    /// Generate left/right randomly.
+    pub fn random_lr() -> Self {if lo!() {Self::Left} else {Self::Right}}
+}
