@@ -15,6 +15,12 @@ impl Tint {
 
 /// Various colors.
 pub enum Color {
+    /** *Natural*
+     isn't any specific color per se but a marker to designate something
+     to be of such a thing's natural color (whatever that might naturally be).
+     */
+    Natural,
+    //-- actual colors:
     Red(Option<Tint>),
     Crimson(Option<Tint>),
     Scarlet(Option<Tint>),
