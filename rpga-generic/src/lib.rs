@@ -5,6 +5,7 @@ pub mod rank;
 pub mod skill;
 pub mod birth;
 pub mod color;
+pub mod body_location;
 
 /**
  A trait for anything with "rank".
