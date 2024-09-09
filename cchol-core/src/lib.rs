@@ -8,3 +8,5 @@ pub mod birth;
 pub mod family;
 pub mod deities_t864;
 pub mod tragedy;
+pub mod misc;
+pub mod attribute;
